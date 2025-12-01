@@ -28,7 +28,7 @@ RUN mkdir -p $P4ROOT $P4_DEPOTS \
     && chown -R perforce:perforce /opt/perforce
 
 # Copy entrypoint script
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose the Perforce port

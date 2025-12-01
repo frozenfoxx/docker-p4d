@@ -10,7 +10,7 @@ services:
     ports:
       - "1666:1666"
     environment:
-      - P4PORT=1666
+      - FQDN="perforce.local"
       - P4ROOT=/opt/perforce/server
       - P4DEPOTS=/opt/perforce/depots
       # - UID=1000

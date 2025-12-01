@@ -15,3 +15,19 @@ git clone https://github.com/frozenfoxx/docker-p4.git
 cd docker-p4
 docker build -t frozenfoxx/p4:latest .
 ```
+
+# How to Use this Image
+
+## Quickstart
+
+The following will run the latest P4 server with a default configuration
+
+```Shell
+docker run -it \
+  --rm \
+  -p 1666:1666 \
+  -v /server/mount/depots:/opt/perforce/depots:rw \
+  -v /server/mount/server:/opt/perforce/server:rw \
+  --name=p4 \
+  frozenfoxx/p4:latest
+```
