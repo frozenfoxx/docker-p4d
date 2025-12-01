@@ -12,7 +12,7 @@ services:
     environment:
       - FQDN="perforce.local"
       - P4ROOT=/opt/perforce/server
-      - P4DEPOTS=/opt/perforce/depots
+      - P4_DEPOTS=/opt/perforce/depots
       # - UID=1000
       # - GID=1000
     volumes:
