@@ -3,8 +3,12 @@ FROM ubuntu:24.04
 LABEL maintainer="FrozenFOXX <frozenfoxx@cultoffoxx.net>"
 
 # Environment variables
-# P4_VERSION now refers to the Perforce release (e.g., r23.2, r24.1)
-ENV DEBIAN_FRONTEND=noninteractive \
+## P4_VERSION refers to the Perforce release (e.g., r23.2, r24.1)
+ENV APP_DEPS=" \
+    ca-certificates \
+    vim \
+    wget" \
+    DEBIAN_FRONTEND=noninteractive \
     P4_BINARY_ARCH="bin.linux26x86_64" \
     P4_BINARY_URL_PREFIX="https://cdist2.perforce.com/perforce/" \
     P4_DEPOTS="/opt/perforce/depots" \
@@ -14,8 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install dependencies, Create User, and Download Binary
 RUN apt-get update && apt-get install -y \
-    wget \
-    ca-certificates \
+    ${APP_DEPS} \
     && groupadd perforce \
     && useradd -g perforce -d /opt/perforce -s /bin/bash perforce \
     && wget -qO /usr/sbin/p4 ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4 \
