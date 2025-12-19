@@ -42,22 +42,3 @@ p4 user (fill in details for root)
 p4 protect (this will make you the superuser if you are the first to connect)
 p4 passwd (set root password)
 ```
-
-## SSL (External Termination / Traefik)
-
-Assuming your SSL is being terminated you will likely want to configure your server like this:
-
-```Shell
-export P4PORT=localhost:1666
-p4 configure set P4PORT=tcp:1666
-p4 configure set security=2
-p4 admin restart
-```
-
-Clients should be configured like this:
-
-```Shell
-export P4PORT=ssl:p4.fqdn.net:1667
-p4 trust -y
-p4 info
-```

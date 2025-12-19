@@ -16,13 +16,21 @@ P4PORT="ssl:${FQDN}:${P4_PORT}"
 ## Create and manage directories
 create_dirs()
 {
-    # Create directories if they don't exist
-    mkdir -p "$P4ROOT" "$P4_DEPOTS"
+    # Check if both directories exist. 
+    # If either is missing, we proceed with creation and permission setting.
+    if [ ! -d "$P4ROOT" ] || [ ! -d "$P4_DEPOTS" ]; then
+        echo "One or more directories missing. Initializing setup..."
 
-    # Ensure permissions are correct
-    echo "Ensuring file permissions for P4ROOT and P4_DEPOTS to match user '$P4_USER' ($(id -u $P4_USER)/$(id -g $P4_USER))..."
-    chown -R $P4_USER:$P4_USER "$P4ROOT"
-    chown -R $P4_USER:$P4_USER "$P4_DEPOTS"
+        # Create directories if they don't exist
+        mkdir -p "$P4ROOT" "$P4_DEPOTS"
+
+        # Ensure permissions are correct
+        echo "Ensuring file permissions for P4ROOT and P4_DEPOTS to match user '$P4_USER' ($(id -u $P4_USER)/$(id -g $P4_USER))..."
+        chown $P4_USER:$P4_USER "$P4ROOT"
+        chown $P4_USER:$P4_USER "$P4_DEPOTS"
+    else
+        echo "Directories P4ROOT and P4_DEPOTS already exist. Skipping creation and chown."
+    fi
 }
 
 ## Check if this is a fresh install and intialize if necessary
