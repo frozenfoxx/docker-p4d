@@ -13,15 +13,14 @@ ENV APP_DEPS=" \
     P4_BINARY_URL_PREFIX="https://cdist2.perforce.com/perforce/" \
     P4_DEPOTS="/opt/perforce/depots" \
     P4_PORT=1666 \
+    P4_SSL_DIR="/opt/perforce/ssl" \
     P4_VERSION="r23.2" \
-    P4ROOT="/opt/perforce/server"
+    P4ROOT="/opt/perforce/server" \
+    SSL_DOMAIN="" \
+    SSL_ENABLED=false
 
 # Install dependencies, Create User, and Download Binary
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    gosu \
-    vim \
-    wget \
+RUN apt-get update && apt-get install -y ${APP_DEPS} \
     && groupadd -r perforce \
     && useradd -r -g perforce -d /opt/perforce -s /bin/bash perforce \
     && wget -qO /usr/sbin/p4 ${P4_BINARY_URL_PREFIX}/${P4_VERSION}/${P4_BINARY_ARCH}/p4 \
@@ -30,14 +29,19 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p $P4ROOT $P4_DEPOTS \
-  && chown -R perforce:perforce /opt/perforce
+# Create necessary directories
+RUN mkdir -p ${P4ROOT} ${P4_DEPOTS} ${P4_SSL_DIR} \
+  && chown -R perforce:perforce ${P4ROOT} ${P4_DEPOTS} ${P4_SSL_DIR}
 
+# Set the working directory
+WORKDIR ${P4ROOT}
+
+# Copy entrypoint script
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 1666
 
-VOLUME ["$P4ROOT", "$P4_DEPOTS"]
+VOLUME ["$P4ROOT", "$P4_DEPOTS", "$P4_SSL_DIR"]
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
