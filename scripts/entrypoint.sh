@@ -48,7 +48,6 @@ configure_ssl() {
         if [ -f "${P4SSLDIR}/certificate.txt" ]; then
             echo "Using existing certificates found in ${P4SSLDIR}..."
             prefix_ssl
-        fi
         else
             echo "Generating self-signed SSL certificates..."
             cd "${P4SSLDIR}"
