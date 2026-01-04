@@ -13,9 +13,9 @@ ENV APP_DEPS=" \
     P4_BINARY_URL_PREFIX="https://cdist2.perforce.com/perforce/" \
     P4_DEPOTS="/opt/perforce/depots" \
     P4_PORT=1666 \
-    P4_SSL_DIR="/opt/perforce/ssl" \
     P4_VERSION="r23.2" \
     P4ROOT="/opt/perforce/server" \
+    P4SSLDIR="/opt/perforce/ssl" \
     SSL_DOMAIN="" \
     SSL_ENABLED=false
 
@@ -30,8 +30,8 @@ RUN apt-get update && apt-get install -y ${APP_DEPS} \
     && rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories
-RUN mkdir -p ${P4ROOT} ${P4_DEPOTS} ${P4_SSL_DIR} \
-  && chown -R perforce:perforce ${P4ROOT} ${P4_DEPOTS} ${P4_SSL_DIR}
+RUN mkdir -p ${P4ROOT} ${P4_DEPOTS} ${P4SSLDIR} \
+  && chown -R perforce:perforce ${P4ROOT} ${P4_DEPOTS} ${P4SSLDIR}
 
 # Set the working directory
 WORKDIR ${P4ROOT}
@@ -42,6 +42,6 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 1666
 
-VOLUME ["$P4ROOT", "$P4_DEPOTS", "$P4_SSL_DIR"]
+VOLUME ["$P4ROOT", "$P4_DEPOTS", "$P4SSLDIR"]
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

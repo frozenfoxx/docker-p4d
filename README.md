@@ -42,3 +42,15 @@ p4 user (fill in details for root)
 p4 protect (this will make you the superuser if you are the first to connect)
 p4 passwd (set root password)
 ```
+
+## SSL
+
+This server supports using externally-generated SSL certificates to secure your installation. Perform the following changes.
+
+First enable support with the environment variable `SSL_ENABLED` set to `true`. After that, you can supply your certificates one of two ways. If you generate your own externally, supply the following files in your `P4SSLDIR`:
+
+- **Certificate**: `certificate.txt`
+- **Private key**: `privatekey.txt`
+- **CA bundle**: `ca.txt`
+
+If you want to use a self-signed one, the image will generate one as long as no files are found in `P4SSLDIR`.
