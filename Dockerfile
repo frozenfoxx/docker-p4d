@@ -6,6 +6,7 @@ LABEL maintainer="FrozenFOXX <frozenfoxx@cultoffoxx.net>"
 ## P4_VERSION refers to the Perforce release (e.g., r23.2, r24.1)
 ENV APP_DEPS=" \
     ca-certificates \
+    gosu \
     vim \
     wget" \
     DEBIAN_FRONTEND=noninteractive \
