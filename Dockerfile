@@ -16,7 +16,6 @@ ENV APP_DEPS=" \
     P4_VERSION="r23.2" \
     P4ROOT="/opt/perforce/server" \
     P4SSLDIR="/opt/perforce/ssl" \
-    SSL_DOMAIN="" \
     SSL_ENABLED=false
 
 # Install dependencies, Create User, and Download Binary
