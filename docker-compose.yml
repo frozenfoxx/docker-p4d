@@ -13,10 +13,13 @@ services:
       - FQDN="perforce.local"
       - P4ROOT=/opt/perforce/server
       - P4_DEPOTS=/opt/perforce/depots
+      # - P4SSLDIR=/opt/perforce/ssl
+      # - SSL_ENABLED=true
       # - UID=1000
       # - GID=1000
     volumes:
       - ./server:/opt/perforce/server
+      # - ./ssl:/opt/perforce/ssl
       - ./depots:/opt/perforce/depots
     healthcheck:
       test: ["CMD", "/usr/sbin/p4", "-p", "1666", "info"]
