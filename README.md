@@ -54,3 +54,18 @@ First enable support with the environment variable `SSL_ENABLED` set to `true`. 
 - **CA bundle**: `ca.txt`
 
 If you want to use a self-signed one, the image will generate one as long as no files are found in `P4SSLDIR`.
+
+You will want to start the server with a volume mounted for SSL. An interactive example of how to run all this:
+
+```Shell
+docker run -it \
+  --rm \
+  -e SSL_ENABLED=true \
+  -e P4SSLDIR=/opt/perforce/ssl \
+  -p 1666:1666 \
+  -v /server/mount/depots:/opt/perforce/depots:rw \
+  -v /server/mount/server:/opt/perforce/server:rw \
+  -v /server/mount/ssl:/opt/perforce/ssl:rw \
+  --name=p4d \
+  frozenfoxx/p4d:latest
+```
